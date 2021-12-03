@@ -817,10 +817,10 @@ contract WSH_1 is Context, IERC20, Ownable {
     function reflectionFromToken(uint256 tAmount, bool deductTransferFee) public view returns(uint256) {
         require(tAmount <= _tTotal, "Amount must be less than supply");
         if (!deductTransferFee) {
-            (uint256 rAmount,,,,,,) = _getValues(tAmount);
+            (uint256 rAmount,,,,,,,) = _getValues(tAmount);
             return rAmount;
         } else {
-            (,uint256 rTransferAmount,,,,,) = _getValues(tAmount);
+            (,uint256 rTransferAmount,,,,,,) = _getValues(tAmount);
             return rTransferAmount;
         }
     }
@@ -955,9 +955,9 @@ contract WSH_1 is Context, IERC20, Ownable {
     function _takeCauseSupportFee(uint256 tCauseSupport) private {
         uint256 currentRate =  _getRate();
         uint256 rCauseSupport = tCauseSupport.mul(currentRate);
-        _rOwned[_causeSupportWallet] = _rOwned[_causeSupportWallet].add(rCauseSupport);
-        if(_isExcluded[_causeSupportWallet])
-            _tOwned[_causeSupportWallet] = _tOwned[_causeSupportWallet].add(tCauseSupport);
+        _rOwned[_causeWallet] = _rOwned[_causeWallet].add(rCauseSupport);
+        if(_isExcluded[_causeWallet])
+            _tOwned[_causeWallet] = _tOwned[_causeWallet].add(tCauseSupport);
     }
 
     function calculateTaxFee(uint256 _amount) private view returns (uint256) {
